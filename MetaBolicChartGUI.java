@@ -20,10 +20,10 @@ public class MetabolicChartGUI extends JFrame {
         inputPanel.add(new JLabel("Age: "));
         ageField = new JTextField();
         inputPanel.add(ageField);
-        inputPanel.add(new JLabel("Weight: "));
+        inputPanel.add(new JLabel("Weight kg: "));
         weightField = new JTextField();
         inputPanel.add(weightField);
-        inputPanel.add(new JLabel("Height: "));
+        inputPanel.add(new JLabel("Height cm: "));
         heightField = new JTextField();
         inputPanel.add(heightField);
         inputPanel.add(new JLabel("Fitness Goal (Weight Loss, Muscle Gain, Weight Maintenance.): "));

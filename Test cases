@@ -1,1 +1,2 @@
-
+In the second part of making our code we found that there was an issue with the packaging part of the assignment so we got rid of that
+And also, we had an error where if the user put there weight or height in pounds or feet the code doesn't adapt to that so we made it clear in the instructions and we made the code work according to the metric systems centimeters and kilograms 

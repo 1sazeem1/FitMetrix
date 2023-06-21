@@ -1,0 +1,130 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+public class MetabolicChartGUI extends JFrame {
+    private ArrayList<UserInput> userInputs;
+    private JTextArea outputArea;
+
+    public MetabolicChartGUI() {
+        setTitle("Metabolic Chart");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        // Create input fields
+        JPanel inputPanel = new JPanel(new GridLayout(5, 2));
+        inputPanel.add(new JLabel("Age: "));
+        JTextField ageField = new JTextField();
+        inputPanel.add(ageField);
+        inputPanel.add(new JLabel("Weight: "));
+        JTextField weightField = new JTextField();
+        inputPanel.add(weightField);
+        inputPanel.add(new JLabel("Height: "));
+        JTextField heightField = new JTextField();
+        inputPanel.add(heightField);
+        inputPanel.add(new JLabel("Fitness Goal: "));
+        JTextField fitnessGoalField = new JTextField();
+        inputPanel.add(fitnessGoalField);
+        JButton calculateButton = new JButton("Calculate");
+        inputPanel.add(calculateButton);
+        add(inputPanel, BorderLayout.NORTH);
+
+        // Create output area
+        outputArea = new JTextArea();
+        outputArea.setEditable(false);
+        JScrollPane scrollPane = new JScrollPane(outputArea);
+        add(scrollPane, BorderLayout.CENTER);
+
+        // Calculate button action listener
+        calculateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int age = Integer.parseInt(ageField.getText());
+                double weight = Double.parseDouble(weightField.getText());
+                double height = Double.parseDouble(heightField.getText());
+                String fitnessGoal = fitnessGoalField.getText();
+
+                UserInput userInput = new UserInput(age, weight, height, fitnessGoal);
+                userInputs.add(userInput);
+
+                calculateMetabolicChart(userInputs);
+            }
+        });
+
+        userInputs = new ArrayList<>();
+
+        pack();
+        setLocationRelativeTo(null); // Center the window on the screen
+        setVisible(true);
+    }
+
+    private void calculateMetabolicChart(ArrayList<UserInput> inputs) {
+        StringBuilder output = new StringBuilder();
+
+        for (UserInput input : inputs) {
+            int age = input.getAge();
+            double weight = input.getWeight();
+            double height = input.getHeight();
+            String fitnessGoal = input.getFitnessGoal();
+
+            double bmr = calculateBMR(age, weight, height);
+            double carbohydrates = calculateCarbohydrates(bmr);
+            double proteins = calculateProteins(bmr);
+            double fats = calculateFats(bmr);
+            String workoutRecommendation = getWorkoutRecommendation(fitnessGoal);
+
+            // Append results to the output StringBuilder
+            output.append("BMR: ").append(bmr).append("\n")
+                    .append("Carbohydrates: ").append(carbohydrates).append("g\n")
+                    .append("Proteins: ").append(proteins).append("g\n")
+                    .append("Fats: ").append(fats).append("g\n")
+                    .append("Workout Recommendation: ").append(workoutRecommendation).append("\n\n");
+        }
+
+        outputArea.setText(output.toString());
+    }
+
+    // Rest of the code...
+
+    
+        public static void main(String[] args) {
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    new MetabolicChartGUI();
+                }
+            });
+        }
+
+        private class UserInput {
+            private int age;
+            private double weight;
+            private double height;
+            private String fitnessGoal;
+
+            public UserInput(int age, double weight, double height, String fitnessGoal) {
+                this.age = age;
+                this.weight = weight;
+                this.height = height;
+                this.fitnessGoal = fitnessGoal;
+            }
+
+            public int getAge() {
+                return age;
+            }
+
+            public double getWeight() {
+                return weight;
+            }
+
+            public double getHeight() {
+                return height;
+            }
+
+            public String getFitnessGoal() {
+                return fitnessGoal;
+            }
+        }
+    }
